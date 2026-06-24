@@ -49,12 +49,12 @@ license page before ingestion** (Phase 2). The result is recorded here:
 
 | Layer | Source URL | License confirmed | Date checked | Checked by |
 |---|---|---|---|---|
-| SRTM 30 m DEM | _pending Phase 2_ | ⏳ | — | — |
-| Sentinel-2 | _pending Phase 2_ | ⏳ | — | — |
-| ESA WorldCover | _pending Phase 2_ | ⏳ | — | — |
-| geoBoundaries | _pending Phase 2_ | ⏳ | — | — |
-| WorldPop | _pending Phase 2_ | ⏳ | — | — |
-| OSM roads | _pending Phase 2_ | ⏳ | — | — |
+| SRTM 30 m DEM | https://www.earthdata.nasa.gov/data/catalog/lpcloud-srtmgl1-003 | ✅ Public domain — "openly shared, without restriction, in accordance with the EOSDIS Data Use and Citation Guidance" | 2026-06-24 | Claude (live WebFetch) |
+| Sentinel-2 | https://dataspace.copernicus.eu/terms-and-conditions | ✅ "free, full and open" (Copernicus Sentinel Data Legal Notice) | 2026-06-24 | Claude (live WebFetch) |
+| ESA WorldCover | https://esa-worldcover.org/en/data-access | ✅ CC-BY 4.0 | 2026-06-24 | Claude (live WebFetch) |
+| geoBoundaries | https://www.geoboundaries.org | ✅ CC-BY 4.0 ("permits commercial and non-commercial uses with attribution") | 2026-06-24 | Claude (live WebFetch) |
+| WorldPop | https://hub.worldpop.org/data/licence.txt | ✅ CC-BY 4.0 ("WorldPop datasets are licensed under the Creative Commons Attribution 4.0 International License") | 2026-06-24 | Claude (live WebFetch) |
+| OSM roads | https://www.openstreetmap.org/copyright | ✅ ODbL 1.0 — share-alike; "free to copy, distribute, transmit and adapt … as long as you credit OpenStreetMap and its contributors" | 2026-06-24 | Claude (live WebFetch) |
 
 ## How attribution flows end-to-end
 

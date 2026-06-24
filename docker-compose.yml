@@ -73,6 +73,7 @@ services:
     volumes:
       - ./worker:/app
       - ./ingest:/ingest
+      - ./catalog:/app/catalog  # STAC catalog package, imported as `catalog.*`
       - exports:/exports
     command: celery -A worker.celery_app worker --loglevel=info
 

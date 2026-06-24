@@ -23,7 +23,18 @@ Items missing either field are rejected at ingestion (Phase 2).
   geoBoundaries, WorldPop).
 - `osm-odbl` — **separate** collection for OpenStreetMap (ODbL share-alike).
 
-## Contents (added in Phase 2)
+## Contents (Phase 2 — built)
 
-- `collections.py` — collection definitions with license metadata.
-- `register.py` — helper to build & validate STAC items before loading to pgSTAC.
+- `collections.py` — the **single source of truth**: the two collections plus the
+  six MVP layers, each with its `license`, ready-to-copy `attribution`, source
+  URL, and a `license_confirmed` flag mirroring the verification log.
+- `register.py` — `build_item` / `validate_item` enforce the mandatory
+  `license` + `attribution` (rejecting anything outside the allowed set), and
+  `load_items` upserts validated items into pgSTAC.
+- `migrate.py` — installs/upgrades the pinned pgSTAC schema and loads the two
+  collections. Run once before ingestion:
+  `docker compose run --rm worker python /app/catalog/migrate.py`.
+
+> **Import note:** always import as `catalog.collections` / `catalog.register`
+> (dotted). Never put this directory directly on `sys.path` — `collections.py`
+> would otherwise shadow Python's standard-library `collections`.
