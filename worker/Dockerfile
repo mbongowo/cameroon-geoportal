@@ -13,8 +13,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY requirements.txt .
 # rasterio/geopandas wheels bundle their own GDAL; CLI tools come from the base.
-RUN pip install --break-system-packages --upgrade pip \
-    && pip install --break-system-packages -r requirements.txt
+# (Don't self-upgrade the Debian-managed pip — it can't uninstall itself; the
+# base pip installs all pinned wheels fine.)
+RUN python3 -m pip install --break-system-packages --no-cache-dir -r requirements.txt
 
 COPY . .
 

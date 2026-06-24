@@ -38,7 +38,7 @@ confirmed in `catalog/collections.py` — which mirrors the verification log in
 
 ```bash
 # 1. one-time: install pgSTAC + load the two collections
-docker compose run --rm worker python /app/catalog/migrate.py
+docker compose run --rm worker python -m catalog.migrate
 
 # 2. ingest one layer, all of them, or just list them
 docker compose run --rm worker python /ingest/run.py --layer srtm

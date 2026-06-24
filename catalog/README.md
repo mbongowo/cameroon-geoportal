@@ -33,7 +33,7 @@ Items missing either field are rejected at ingestion (Phase 2).
   `load_items` upserts validated items into pgSTAC.
 - `migrate.py` — installs/upgrades the pinned pgSTAC schema and loads the two
   collections. Run once before ingestion:
-  `docker compose run --rm worker python /app/catalog/migrate.py`.
+  `docker compose run --rm worker python -m catalog.migrate`.
 
 > **Import note:** always import as `catalog.collections` / `catalog.register`
 > (dotted). Never put this directory directly on `sys.path` — `collections.py`

@@ -14,7 +14,9 @@ morecantile==6.2.0
 # Catalog (STAC)
 pystac==1.11.0
 pystac-client==0.8.5
-pypgstac[psycopg]==0.9.2
+# psycopg comes from our own pin below (3.2.x); pypgstac's [psycopg] extra would
+# force 3.1.* — omit the extra to avoid the conflict.
+pypgstac==0.9.2
 # Data access (Phase 2 ingestion)
 requests==2.32.3
 earthaccess==0.12.0
@@ -23,3 +25,4 @@ pyrosm==0.6.2
 boto3==1.35.90
 SQLAlchemy==2.0.36
 psycopg[binary]==3.2.3
+psycopg-pool==3.2.4  # pgSTAC's PgstacDB needs the psycopg connection pool

@@ -3,7 +3,12 @@
 
 Run once before ingestion (inside the worker container, which has DB access):
 
-    docker compose run --rm worker python /app/catalog/migrate.py
+    docker compose run --rm worker python -m catalog.migrate
+
+Run it as a **module** (``-m catalog.migrate``), not as a path
+(``python catalog/migrate.py``): the latter would put the ``catalog/`` directory
+on ``sys.path`` and ``collections.py`` would shadow the standard-library
+``collections`` module, breaking the interpreter on startup.
 
 pgSTAC is installed via ``pypgstac migrate`` so its version is pinned and
 reproducible (the init SQL deliberately leaves the catalog schema to this step).
@@ -13,10 +18,7 @@ from __future__ import annotations
 import os
 import sys
 
-# Allow running as a script: ensure the `catalog` package is importable.
-sys.path.insert(0, "/app")
-
-from catalog.collections import collection_dicts  # noqa: E402
+from catalog.collections import collection_dicts
 
 
 def main() -> int:
