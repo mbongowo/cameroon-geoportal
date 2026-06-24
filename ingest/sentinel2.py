@@ -47,12 +47,26 @@ def ingest(layer: Layer) -> dict:
             best[tile] = it
     c.log.info("Sentinel-2 tiles selected: %d", len(best))
 
-    # Mosaic the remote `visual` COGs (read in place via /vsicurl/).
+    # Mosaic the remote `visual` (true-colour) COGs, read in place via /vsicurl/.
+    # Cameroon straddles UTM zones 32N and 33N, so we CANNOT use gdalbuildvrt
+    # (it locks onto the first tile's CRS and silently drops the other zone).
+    # A single gdalwarp reprojects every tile into EPSG:4326 and mosaics them.
+    # We cap the output resolution (default ~55 m) so a country-wide RGB mosaic
+    # stays a sensible size for a web preview — full 10 m is a Phase 3+ refinement.
     hrefs = [f"/vsicurl/{it.assets['visual'].href}" for it in best.values()]
-    vrt = c.WORK_DIR / "sentinel2.vrt"
-    c.run(["gdalbuildvrt", str(vrt), *hrefs])
+    cutline = c.cameroon_cutline()
+    res = layer.extra.get("target_res_deg", 0.0005)
     clipped = c.WORK_DIR / "sentinel2_cmr.tif"
-    c.clip_raster_to_cameroon(vrt, clipped, nodata=0)
+    c.run([
+        "gdalwarp", "-overwrite",
+        "-t_srs", "EPSG:4326",
+        "-cutline", str(cutline), "-crop_to_cutline",
+        "-tr", str(res), str(res),
+        "-dstnodata", "0",
+        "-multi", "-wo", "NUM_THREADS=ALL_CPUS",
+        "-co", "TILED=YES", "-co", "COMPRESS=DEFLATE",
+        *hrefs, str(clipped),
+    ])
     cog = c.COG_DIR / f"{layer.id}.tif"
     c.to_cog(clipped, cog)
 

@@ -81,7 +81,14 @@ LAYERS: list[Layer] = [
         source_url="https://dataspace.copernicus.eu/terms-and-conditions",
         license_confirmed=True,
         license_checked="2026-06-24",
-        extra={"stac_collection": "sentinel-2-l2a", "max_cloud_cover": 10},
+        # target_res_deg: output mosaic resolution (~0.0005° ≈ 55 m). Cameroon
+        # spans UTM 32N/33N so the mosaic is built with a reprojecting gdalwarp,
+        # not gdalbuildvrt. Full 10 m is a Phase 3+ refinement.
+        extra={
+            "stac_collection": "sentinel-2-l2a",
+            "max_cloud_cover": 10,
+            "target_res_deg": 0.0005,
+        },
     ),
     Layer(
         id="esa-worldcover-10m",
