@@ -1,0 +1,24 @@
+# Celery processing worker — pinned for reproducibility.
+# GDAL/OGR CLI tools come from the osgeo/gdal base image (see Dockerfile).
+celery==5.4.0
+redis==5.2.1
+# Geospatial core
+rasterio==1.4.3
+rio-cogeo==5.4.1
+rio-tiler==7.4.0
+geopandas==1.0.1
+shapely==2.0.6
+fiona==1.10.1
+pyproj==3.7.0
+morecantile==6.2.0
+# Catalog (STAC)
+pystac==1.11.0
+pystac-client==0.8.5
+# Data access (Phase 2 ingestion)
+requests==2.32.3
+earthaccess==0.12.0
+pyrosm==0.6.2
+# Object storage + DB
+boto3==1.35.90
+SQLAlchemy==2.0.36
+psycopg[binary]==3.2.3

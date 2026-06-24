@@ -1,0 +1,65 @@
+# ---- Secrets / env ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials.json
+
+# ---- Data & geospatial artifacts (never commit data or COGs) ----
+data/
+*.tif
+*.tiff
+*.cog
+*.vrt
+*.img
+*.jp2
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.geojson
+*.pbf
+*.osm
+*.osm.pbf
+*.zip
+*.gz
+*.7z
+# keep small fixtures explicitly if needed:
+!**/fixtures/**/*.geojson
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---- Node / frontend ----
+node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- Docker / build ----
+*.log
+.DS_Store
+Thumbs.db
+
+# ---- IDE ----
+.idea/
+.vscode/
+*.swp
+~$*
