@@ -25,12 +25,20 @@ MODULES: dict[str, str] = {
     "admin-boundaries": "admin_boundaries",
     "worldpop-population": "worldpop",
     "osm-roads": "osm_roads",
+    "ne-populated-places": "natural_earth",
+    "ne-rivers": "natural_earth",
+    "ne-lakes": "natural_earth",
+    "osm-waterways": "osm_extra",
+    "osm-landuse": "osm_extra",
+    "health-facilities": "healthsites",
 }
 
 # Sensible order: boundaries first (they provide the clip cutline), then rasters.
 DEFAULT_ORDER = [
     "admin-boundaries", "srtm-30m-dem", "esa-worldcover-10m",
     "worldpop-population", "sentinel2-mosaic", "osm-roads",
+    "ne-populated-places", "ne-rivers", "ne-lakes",
+    "osm-waterways", "osm-landuse", "health-facilities",
 ]
 
 

@@ -55,6 +55,9 @@ license page before ingestion** (Phase 2). The result is recorded here:
 | ~~geoBoundaries~~ → **OCHA COD-AB** | https://data.humdata.org/dataset/cod-ab-cmr (HDX CKAN API) | ✅ CC-BY-IGO 3.0 — commercial use + redistribution OK with attribution. Source: OCHA / INC Cameroon. Replaced geoBoundaries gbOpen, whose ADM0–3 did not nest; COD-AB ADM3 dissolved up to ADM2/1/0 for guaranteed nesting | 2026-06-25 | Claude (subagent live API verify) |
 | WorldPop | https://hub.worldpop.org/data/licence.txt | ✅ CC-BY 4.0 ("WorldPop datasets are licensed under the Creative Commons Attribution 4.0 International License") | 2026-06-24 | Claude (live WebFetch) |
 | OSM roads | https://www.openstreetmap.org/copyright | ✅ ODbL 1.0 — share-alike; "free to copy, distribute, transmit and adapt … as long as you credit OpenStreetMap and its contributors" | 2026-06-24 | Claude (live WebFetch) |
+| Natural Earth (places, rivers, lakes) | https://www.naturalearthdata.com/about/terms-of-use/ | ✅ Public Domain — "All versions of Natural Earth raster + vector map data … are in the public domain" | 2026-06-25 | Claude (live WebFetch) |
+| OSM waterways + land use | https://www.openstreetmap.org/copyright | ✅ ODbL 1.0 (Geofabrik Cameroon extract → isolated osm_odbl tier) | 2026-06-24 | Claude (live WebFetch) |
+| healthsites.io health facilities | https://healthsites.io/ (HDX CKAN API) | ✅ ODbL 1.0 (OSM-derived → osm_odbl tier) | 2026-06-25 | Claude (subagent API verify) |
 
 ## How attribution flows end-to-end
 
