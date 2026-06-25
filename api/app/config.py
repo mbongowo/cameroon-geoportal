@@ -17,6 +17,10 @@ class Settings(BaseSettings):
     # Redis / Celery
     redis_url: str = "redis://redis:6379/0"
 
+    # Tile services — browser-facing base URLs the API hands to the frontend.
+    titiler_public_url: str = "http://localhost:8001"
+    martin_public_url: str = "http://localhost:3000"
+
     # Object storage (Cloudflare R2)
     r2_endpoint_url: str = ""
     r2_bucket: str = "cameroon-geoportal-cogs"

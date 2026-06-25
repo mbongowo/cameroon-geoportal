@@ -5,6 +5,7 @@ pydantic==2.10.4
 pydantic-settings==2.7.1
 SQLAlchemy==2.0.36
 psycopg[binary]==3.2.3
+psycopg-pool==3.2.4  # pooled pgSTAC connections for the catalog endpoints
 redis==5.2.1
 celery==5.4.0
 httpx==0.28.1

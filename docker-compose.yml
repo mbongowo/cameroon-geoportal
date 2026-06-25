@@ -55,6 +55,7 @@ services:
       - "${API_PORT:-8000}:8000"
     volumes:
       - ./api:/app
+      - exports:/exports  # serve AOI export bundles (Phase 3b)
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   # ----------------------------------------------- Celery processing worker
@@ -87,6 +88,10 @@ services:
       GDAL_DISABLE_READDIR_ON_OPEN: EMPTY_DIR
       CPL_VSIL_CURL_ALLOWED_EXTENSIONS: ".tif,.tiff,.cog"
       MOSAIC_CONCURRENCY: "1"
+    volumes:
+      # COGs live in the exports volume; titiler reads them as local files
+      # (file:///exports/cogs/<id>.tif). When COGs move to R2, titiler reads by URL.
+      - exports:/exports:ro
     ports:
       - "${TITILER_PORT:-8001}:8000"
 

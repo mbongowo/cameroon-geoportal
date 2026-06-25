@@ -1,2 +1,14 @@
-# Martin auto-discovers PostGIS spatial tables. Add a curated config here in later phases.
-# Docs: https://maplibre.org/martin/
+# Martin auto-discovers PostGIS spatial tables — no config file is required for
+# the MVP. With DATABASE_URL set (see docker-compose.yml), Martin publishes one
+# vector-tile source per spatial table, named by the table:
+#
+#   layers.geoboundaries_adm0..3  ->  geoboundaries_adm0 .. geoboundaries_adm3
+#   osm_odbl.roads                ->  roads   (ODbL — isolated schema)
+#
+# Inspect the live source list at:  GET http://localhost:3000/catalog
+# Tile URLs the API hands the frontend:
+#   http://localhost:3000/<source_id>                 (TileJSON)
+#   http://localhost:3000/<source_id>/{z}/{x}/{y}     (MVT)
+#
+# To curate sources (rename, simplify, restrict zooms) later, mount a config
+# file here and pass `--config /config.yaml`. Docs: https://maplibre.org/martin/
