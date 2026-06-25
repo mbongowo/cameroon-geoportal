@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     titiler_public_url: str = "http://localhost:8001"
     martin_public_url: str = "http://localhost:3000"
 
+    # Where the worker writes export bundles (shared `exports` volume).
+    exports_bundle_dir: str = "/exports/bundles"
+
     # Object storage (Cloudflare R2)
     r2_endpoint_url: str = ""
     r2_bucket: str = "cameroon-geoportal-cogs"
