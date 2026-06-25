@@ -38,7 +38,7 @@ so share-alike never contaminates other products.
 | 1 | **SRTM 30 m DEM** | Elevation | Raster (COG) | Public Domain | "Elevation data: NASA SRTM (public domain)." | open |
 | 2 | **Sentinel-2 cloud-free mosaic** | Optical imagery | Raster (COG) | Copernicus (free & open) | "Contains modified Copernicus Sentinel-2 data [year], processed for the Cameroon Geoportal." | open |
 | 3 | **ESA WorldCover 10 m** | Land cover | Raster (COG) | CC-BY 4.0 | "© ESA WorldCover project / Contains modified Copernicus Sentinel data (2021), licensed under CC-BY 4.0." | open |
-| 4 | **geoBoundaries ADM0–ADM3** | Admin boundaries | Vector (PostGIS) | CC-BY 4.0 | "Administrative boundaries: geoBoundaries (www.geoboundaries.org), CC-BY 4.0." | open |
+| 4 | **OCHA COD-AB ADM0–ADM3** (replaced geoBoundaries — those levels did not nest) | Admin boundaries | Vector (PostGIS) | CC-BY-IGO 3.0 | "Administrative boundaries: OCHA / Institut National de Cartographie (INC), Cameroon — COD-AB, CC-BY-IGO 3.0." | open |
 | 5 | **WorldPop** | Population | Raster (COG) | CC-BY 4.0 | "Population data: WorldPop (www.worldpop.org), University of Southampton, CC-BY 4.0." | open |
 | 6 | **OpenStreetMap roads** | Transport | Vector (PostGIS) | **ODbL** | "© OpenStreetMap contributors, ODbL (www.openstreetmap.org/copyright)." | **osm-odbl** |
 
@@ -52,7 +52,7 @@ license page before ingestion** (Phase 2). The result is recorded here:
 | SRTM 30 m DEM | https://www.earthdata.nasa.gov/data/catalog/lpcloud-srtmgl1-003 | ✅ Public domain — "openly shared, without restriction, in accordance with the EOSDIS Data Use and Citation Guidance" | 2026-06-24 | Claude (live WebFetch) |
 | Sentinel-2 | https://dataspace.copernicus.eu/terms-and-conditions | ✅ "free, full and open" (Copernicus Sentinel Data Legal Notice) | 2026-06-24 | Claude (live WebFetch) |
 | ESA WorldCover | https://esa-worldcover.org/en/data-access | ✅ CC-BY 4.0 | 2026-06-24 | Claude (live WebFetch) |
-| geoBoundaries | https://www.geoboundaries.org | ✅ CC-BY 4.0 ("permits commercial and non-commercial uses with attribution") | 2026-06-24 | Claude (live WebFetch) |
+| ~~geoBoundaries~~ → **OCHA COD-AB** | https://data.humdata.org/dataset/cod-ab-cmr (HDX CKAN API) | ✅ CC-BY-IGO 3.0 — commercial use + redistribution OK with attribution. Source: OCHA / INC Cameroon. Replaced geoBoundaries gbOpen, whose ADM0–3 did not nest; COD-AB ADM3 dissolved up to ADM2/1/0 for guaranteed nesting | 2026-06-25 | Claude (subagent live API verify) |
 | WorldPop | https://hub.worldpop.org/data/licence.txt | ✅ CC-BY 4.0 ("WorldPop datasets are licensed under the Creative Commons Attribution 4.0 International License") | 2026-06-24 | Claude (live WebFetch) |
 | OSM roads | https://www.openstreetmap.org/copyright | ✅ ODbL 1.0 — share-alike; "free to copy, distribute, transmit and adapt … as long as you credit OpenStreetMap and its contributors" | 2026-06-24 | Claude (live WebFetch) |
 

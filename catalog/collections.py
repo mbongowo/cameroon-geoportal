@@ -19,10 +19,18 @@ from dataclasses import dataclass, field
 CAMEROON_BBOX: list[float] = [8.40, 1.65, 16.21, 13.10]
 
 # Allowed license identifiers. Anything else is rejected at registration.
+# All permit redistribution + commercial use with (at most) attribution — no
+# NonCommercial, no ShareAlike. CC-BY-IGO-3.0 (UN/OCHA) and CC-BY-3.0 are the
+# attribution-only IGO/older variants of CC-BY, functionally equivalent for our
+# redistribute-for-a-fee model. copernicus-dem-eula is ESA's permissive DEM
+# licence (free worldwide, commercial use OK, attribution required).
 ALLOWED_LICENSES: set[str] = {
     "public-domain",
     "copernicus-free-open",
+    "copernicus-dem-eula",
     "CC-BY-4.0",
+    "CC-BY-3.0",
+    "CC-BY-IGO-3.0",
     "ODbL-1.0",
 }
 
@@ -108,20 +116,26 @@ LAYERS: list[Layer] = [
         extra={"version": "v200", "year": 2021},
     ),
     Layer(
-        id="geoboundaries-adm",
-        title="geoBoundaries ADM0–ADM3",
+        id="admin-boundaries",
+        title="Administrative boundaries (OCHA COD-AB, ADM0–3)",
         theme="boundaries",
         datatype="vector",
-        license="CC-BY-4.0",
+        license="CC-BY-IGO-3.0",
         attribution=(
-            "Administrative boundaries: geoBoundaries (www.geoboundaries.org), "
-            "CC-BY 4.0."
+            "Administrative boundaries: OCHA / Institut National de Cartographie "
+            "(INC), Cameroon — Common Operational Dataset (COD-AB), CC-BY-IGO 3.0."
         ),
         collection=COLLECTION_OPEN,
-        source_url="https://www.geoboundaries.org",
+        source_url="https://data.humdata.org/dataset/cod-ab-cmr",
         license_confirmed=True,
-        license_checked="2026-06-24",
-        extra={"iso3": "CMR", "levels": ["ADM0", "ADM1", "ADM2", "ADM3"]},
+        license_checked="2026-06-25",
+        # Single hierarchical (PCODE-nested) COD source — fixes the gbOpen
+        # level-misalignment. Edge-matched GeoPackage from fieldmaps.io.
+        extra={
+            "iso3": "CMR",
+            "gpkg_zip": "https://data.fieldmaps.io/cod/originals/cmr.gpkg.zip",
+            "levels": ["adm0", "adm1", "adm2", "adm3"],
+        },
     ),
     Layer(
         id="worldpop-population",
@@ -161,7 +175,8 @@ LAYER_ALIASES: dict[str, str] = {
     "srtm": "srtm-30m-dem",
     "sentinel2": "sentinel2-mosaic",
     "worldcover": "esa-worldcover-10m",
-    "geoboundaries": "geoboundaries-adm",
+    "boundaries": "admin-boundaries",
+    "admin": "admin-boundaries",
     "worldpop": "worldpop-population",
     "osm_roads": "osm-roads",
     "osm": "osm-roads",

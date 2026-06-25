@@ -22,14 +22,14 @@ MODULES: dict[str, str] = {
     "srtm-30m-dem": "srtm",
     "sentinel2-mosaic": "sentinel2",
     "esa-worldcover-10m": "worldcover",
-    "geoboundaries-adm": "geoboundaries",
+    "admin-boundaries": "admin_boundaries",
     "worldpop-population": "worldpop",
     "osm-roads": "osm_roads",
 }
 
 # Sensible order: boundaries first (they provide the clip cutline), then rasters.
 DEFAULT_ORDER = [
-    "geoboundaries-adm", "srtm-30m-dem", "esa-worldcover-10m",
+    "admin-boundaries", "srtm-30m-dem", "esa-worldcover-10m",
     "worldpop-population", "sentinel2-mosaic", "osm-roads",
 ]
 
