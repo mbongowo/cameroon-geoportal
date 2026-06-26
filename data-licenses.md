@@ -61,6 +61,9 @@ license page before ingestion** (Phase 2). The result is recorded here:
 | Copernicus DEM GLO-30 | https://dataspace.copernicus.eu/.../COP-DEM | ✅ ESA Copernicus DEM EULA — free worldwide, commercial use + redistribution OK with attribution (© DLR/Airbus, COPERNICUS/EU/ESA) | 2026-06-25 | Claude (subagent verify) |
 | Hansen Global Forest Change | https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/download.html | ✅ CC-BY 4.0 ("free to copy, redistribute … even commercially"; cite Hansen/UMD/Google/USGS/NASA) | 2026-06-25 | Claude (subagent verify) |
 | JRC Global Surface Water | https://global-surface-water.appspot.com/download | ✅ Copernicus free & open — "provided free of charge, without restriction of use" (EC JRC/Google) | 2026-06-25 | Claude (subagent verify) |
+| ISRIC SoilGrids (SOC) | https://www.isric.org/explore/soilgrids | ✅ CC-BY 4.0 (SoilGrids prediction maps); WCS GetCoverage subset | 2026-06-25 | Claude (subagent verify) |
+| Copernicus Global Land Cover (CGLS-LC100) | https://zenodo.org/records/3939050 | ✅ CC-BY 4.0 (Zenodo record) | 2026-06-25 | Claude (subagent verify) |
+| USGS Africa mineral GIS | https://www.sciencebase.gov/catalog/item/607611a9d34e018b3201cbbf | ✅ Public domain (U.S. Geological Survey work, DOI 10.5066/P97EQWXP) | 2026-06-25 | Claude (subagent verify) |
 
 ## How attribution flows end-to-end
 

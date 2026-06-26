@@ -349,6 +349,63 @@ LAYERS: list[Layer] = [
             "render": "rescale=0,100&colormap_name=blues",
         },
     ),
+    Layer(
+        id="soilgrids-soc",
+        title="Soil organic carbon 0–5 cm (SoilGrids)",
+        theme="soil",
+        datatype="raster",
+        license="CC-BY-4.0",
+        attribution="Soil data: ISRIC — SoilGrids (soilgrids.org), CC-BY 4.0.",
+        collection=COLLECTION_OPEN,
+        source_url="https://www.isric.org/explore/soilgrids",
+        license_confirmed=True,
+        license_checked="2026-06-25",
+        # WCS GetCoverage already returns a Cameroon subset in EPSG:4326.
+        extra={
+            "tile_urls": [
+                "https://maps.isric.org/mapserv?map=/map/soc.map&SERVICE=WCS&VERSION=2.0.1&REQUEST=GetCoverage&COVERAGEID=soc_0-5cm_mean&FORMAT=GEOTIFF_INT16&SUBSET=X(8.4,16.21)&SUBSET=Y(1.65,13.10)&SUBSETTINGCRS=http://www.opengis.net/def/crs/EPSG/0/4326&OUTPUTCRS=http://www.opengis.net/def/crs/EPSG/0/4326"
+            ],
+            "nodata": 0,
+            "render": "rescale=0,400&colormap_name=ylorbr",
+        },
+    ),
+    Layer(
+        id="cgls-landcover",
+        title="Land cover 100 m (Copernicus Global Land)",
+        theme="landcover",
+        datatype="raster",
+        license="CC-BY-4.0",
+        attribution="Land cover: © Copernicus Global Land Service (CGLS-LC100), CC-BY 4.0.",
+        collection=COLLECTION_OPEN,
+        source_url="https://zenodo.org/records/3939050",
+        license_confirmed=True,
+        license_checked="2026-06-25",
+        # Single global GeoTIFF (~1.7 GB); raster_tiles clips to Cameroon + cleans.
+        extra={
+            "tile_urls": [
+                "https://zenodo.org/records/3939050/files/PROBAV_LC100_global_v3.0.1_2019-nrt_Discrete-Classification-map_EPSG-4326.tif?download=1"
+            ],
+            "nodata": 0,
+            "render": "rescale=0,200&colormap_name=tab20",
+        },
+    ),
+    Layer(
+        id="usgs-minerals",
+        title="Mineral facilities & occurrences (USGS)",
+        theme="minerals",
+        datatype="vector",
+        license="public-domain",
+        attribution="Mineral resources: USGS Africa GIS (U.S. Geological Survey, public domain).",
+        collection=COLLECTION_OPEN,
+        source_url="https://www.sciencebase.gov/catalog/item/607611a9d34e018b3201cbbf",
+        license_confirmed=True,
+        license_checked="2026-06-25",
+        extra={
+            "gdb_zip": "https://www.sciencebase.gov/catalog/file/get/607611a9d34e018b3201cbbf?f=__disk__30%2F8a%2Fb1%2F308ab140de2e0a1384172068209374d19ae4a65a",
+            # feature classes whose names match these get clipped to Cameroon + loaded
+            "layer_match": ["mineral", "deposit", "occurrence", "coal"],
+        },
+    ),
 ]
 
 LAYERS_BY_ID: dict[str, Layer] = {layer.id: layer for layer in LAYERS}
@@ -375,6 +432,11 @@ LAYER_ALIASES: dict[str, str] = {
     "forest": "hansen-forest",
     "hansen": "hansen-forest",
     "jrc": "jrc-water",
+    "soil": "soilgrids-soc",
+    "soilgrids": "soilgrids-soc",
+    "cgls": "cgls-landcover",
+    "minerals": "usgs-minerals",
+    "usgs": "usgs-minerals",
 }
 
 
