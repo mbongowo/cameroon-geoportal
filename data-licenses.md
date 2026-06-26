@@ -58,6 +58,9 @@ license page before ingestion** (Phase 2). The result is recorded here:
 | Natural Earth (places, rivers, lakes) | https://www.naturalearthdata.com/about/terms-of-use/ | ✅ Public Domain — "All versions of Natural Earth raster + vector map data … are in the public domain" | 2026-06-25 | Claude (live WebFetch) |
 | OSM waterways + land use | https://www.openstreetmap.org/copyright | ✅ ODbL 1.0 (Geofabrik Cameroon extract → isolated osm_odbl tier) | 2026-06-24 | Claude (live WebFetch) |
 | healthsites.io health facilities | https://healthsites.io/ (HDX CKAN API) | ✅ ODbL 1.0 (OSM-derived → osm_odbl tier) | 2026-06-25 | Claude (subagent API verify) |
+| Copernicus DEM GLO-30 | https://dataspace.copernicus.eu/.../COP-DEM | ✅ ESA Copernicus DEM EULA — free worldwide, commercial use + redistribution OK with attribution (© DLR/Airbus, COPERNICUS/EU/ESA) | 2026-06-25 | Claude (subagent verify) |
+| Hansen Global Forest Change | https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/download.html | ✅ CC-BY 4.0 ("free to copy, redistribute … even commercially"; cite Hansen/UMD/Google/USGS/NASA) | 2026-06-25 | Claude (subagent verify) |
+| JRC Global Surface Water | https://global-surface-water.appspot.com/download | ✅ Copernicus free & open — "provided free of charge, without restriction of use" (EC JRC/Google) | 2026-06-25 | Claude (subagent verify) |
 
 ## How attribution flows end-to-end
 

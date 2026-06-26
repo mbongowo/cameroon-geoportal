@@ -6,23 +6,10 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 const CAMEROON_CENTER = [12.35, 7.37];
 
 // --- tile URL helpers --------------------------------------------------------
-// titiler renders single-band rasters better with a rescale + colormap; RGB
-// imagery renders natively. The API hands us the base tilejson URL.
+// The API embeds the titiler render hint (rescale + colormap, per layer) in the
+// tilejson URL, so the frontend uses it as-is.
 function rasterTileJson(item) {
-  const u = item.tiles.tilejson;
-  const sep = u.includes("?") ? "&" : "?";
-  switch (item.theme) {
-    case "imagery":
-      return u; // true-colour RGB
-    case "population":
-      return `${u}${sep}rescale=0,80&colormap_name=viridis`;
-    case "elevation":
-      return `${u}${sep}rescale=0,4000&colormap_name=terrain`;
-    case "landcover":
-      return `${u}${sep}rescale=10,100&colormap_name=gist_earth`;
-    default:
-      return `${u}${sep}rescale=0,255`;
-  }
+  return item.tiles.tilejson;
 }
 
 const VECTOR_PAINT = {

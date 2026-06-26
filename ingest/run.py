@@ -31,14 +31,20 @@ MODULES: dict[str, str] = {
     "osm-waterways": "osm_extra",
     "osm-landuse": "osm_extra",
     "health-facilities": "healthsites",
+    "copernicus-dem": "copdem",
+    "dem-hillshade": "hillshade",
+    "hansen-forest": "raster_tiles",
+    "jrc-water": "raster_tiles",
 }
 
 # Sensible order: boundaries first (they provide the clip cutline), then rasters.
+# copernicus-dem must precede dem-hillshade (which derives from its COG).
 DEFAULT_ORDER = [
     "admin-boundaries", "srtm-30m-dem", "esa-worldcover-10m",
     "worldpop-population", "sentinel2-mosaic", "osm-roads",
     "ne-populated-places", "ne-rivers", "ne-lakes",
     "osm-waterways", "osm-landuse", "health-facilities",
+    "copernicus-dem", "dem-hillshade", "hansen-forest", "jrc-water",
 ]
 
 

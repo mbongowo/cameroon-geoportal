@@ -271,6 +271,84 @@ LAYERS: list[Layer] = [
             "table": "health_facilities",
         },
     ),
+    # ---- Wave 3: rasters (each carries its own titiler render hint) ----
+    Layer(
+        id="copernicus-dem",
+        title="Copernicus DEM GLO-30 (elevation)",
+        theme="elevation",
+        datatype="raster",
+        license="copernicus-dem-eula",
+        attribution=(
+            "Elevation: Copernicus DEM GLO-30 © DLR / Airbus, provided under "
+            "COPERNICUS by the European Union and ESA."
+        ),
+        collection=COLLECTION_OPEN,
+        source_url="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+        license_confirmed=True,
+        license_checked="2026-06-25",
+        extra={"render": "rescale=0,4000&colormap_name=terrain"},
+    ),
+    Layer(
+        id="dem-hillshade",
+        title="Hillshade (from Copernicus DEM)",
+        theme="topographic",
+        datatype="raster",
+        license="copernicus-dem-eula",
+        attribution=(
+            "Hillshade derived from Copernicus DEM GLO-30 © DLR / Airbus, "
+            "provided under COPERNICUS by the European Union and ESA."
+        ),
+        collection=COLLECTION_OPEN,
+        source_url="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+        license_confirmed=True,
+        license_checked="2026-06-25",
+        # derived from the copernicus-dem COG (must be ingested first)
+        extra={"from_cog": "copernicus-dem", "render": "rescale=0,255"},
+    ),
+    Layer(
+        id="hansen-forest",
+        title="Forest cover 2000 (Hansen Global Forest Change)",
+        theme="forest",
+        datatype="raster",
+        license="CC-BY-4.0",
+        attribution="Forest cover: Hansen/UMD/Google/USGS/NASA, CC-BY 4.0.",
+        collection=COLLECTION_OPEN,
+        source_url="https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/download.html",
+        license_confirmed=True,
+        license_checked="2026-06-25",
+        extra={
+            "tile_urls": [
+                "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/Hansen_GFC-2023-v1.11_treecover2000_10N_000E.tif",
+                "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/Hansen_GFC-2023-v1.11_treecover2000_10N_010E.tif",
+                "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/Hansen_GFC-2023-v1.11_treecover2000_20N_000E.tif",
+                "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/Hansen_GFC-2023-v1.11_treecover2000_20N_010E.tif",
+            ],
+            "nodata": None,
+            "render": "rescale=0,100&colormap_name=greens",
+        },
+    ),
+    Layer(
+        id="jrc-water",
+        title="Surface water occurrence (JRC Global Surface Water)",
+        theme="water",
+        datatype="raster",
+        license="copernicus-free-open",
+        attribution="Surface water: EC JRC / Google — Global Surface Water, free and open.",
+        collection=COLLECTION_OPEN,
+        source_url="https://global-surface-water.appspot.com/download",
+        license_confirmed=True,
+        license_checked="2026-06-25",
+        extra={
+            "tile_urls": [
+                "https://storage.googleapis.com/global-surface-water/downloads2021/occurrence/occurrence_0E_10Nv1_4_2021.tif",
+                "https://storage.googleapis.com/global-surface-water/downloads2021/occurrence/occurrence_10E_10Nv1_4_2021.tif",
+                "https://storage.googleapis.com/global-surface-water/downloads2021/occurrence/occurrence_0E_20Nv1_4_2021.tif",
+                "https://storage.googleapis.com/global-surface-water/downloads2021/occurrence/occurrence_10E_20Nv1_4_2021.tif",
+            ],
+            "nodata": 255,
+            "render": "rescale=0,100&colormap_name=blues",
+        },
+    ),
 ]
 
 LAYERS_BY_ID: dict[str, Layer] = {layer.id: layer for layer in LAYERS}
@@ -291,6 +369,12 @@ LAYER_ALIASES: dict[str, str] = {
     "waterways": "osm-waterways",
     "landuse": "osm-landuse",
     "health": "health-facilities",
+    "dem": "copernicus-dem",
+    "copdem": "copernicus-dem",
+    "hillshade": "dem-hillshade",
+    "forest": "hansen-forest",
+    "hansen": "hansen-forest",
+    "jrc": "jrc-water",
 }
 
 

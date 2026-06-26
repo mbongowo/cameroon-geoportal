@@ -18,16 +18,35 @@ from app.config import settings
 router = APIRouter(tags=["catalog"])
 
 
-def _raster_tiles(assets: dict) -> dict:
-    """titiler tilejson for a raster item's COG (read server-side by path)."""
+# Default titiler render hints per theme (used when an item has no explicit
+# geoportal:render). Imagery is RGB and renders natively (no rescale).
+_THEME_RENDER = {
+    "imagery": "",
+    "population": "rescale=0,80&colormap_name=viridis",
+    "landcover": "rescale=10,100&colormap_name=gist_earth",
+    "elevation": "rescale=0,4000&colormap_name=terrain",
+    "topographic": "rescale=0,255",
+}
+
+
+def _raster_tiles(assets: dict, props: dict) -> dict:
+    """titiler tilejson for a raster item's COG (read server-side by path).
+
+    The render hint (rescale + colormap) is embedded so the frontend uses the
+    URL as-is. Explicit ``geoportal:render`` wins; otherwise a per-theme default.
+    """
     href = assets.get("data", {}).get("href", "")
     # file:///exports/cogs/<id>.tif -> /exports/cogs/<id>.tif (titiler's local path)
     path = href.replace("file://", "")
     base = settings.titiler_public_url.rstrip("/")
+    render = props.get("geoportal:render")
+    if not render:
+        render = _THEME_RENDER.get(props.get("theme", ""), "rescale=0,255")
+    suffix = f"&{render}" if render else ""
     return {
         "type": "raster",
         "service": "titiler",
-        "tilejson": f"{base}/cog/WebMercatorQuad/tilejson.json?url={path}",
+        "tilejson": f"{base}/cog/WebMercatorQuad/tilejson.json?url={path}{suffix}",
         "info": f"{base}/cog/info?url={path}",
     }
 
@@ -59,7 +78,7 @@ def _layer_view(feature: dict) -> dict:
 
     tiles: dict = {}
     if datatype == "raster":
-        tiles = _raster_tiles(assets)
+        tiles = _raster_tiles(assets, props)
     elif datatype == "vector":
         tiles = _vector_tiles(assets)
 
