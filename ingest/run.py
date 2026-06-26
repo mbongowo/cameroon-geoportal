@@ -39,6 +39,7 @@ MODULES: dict[str, str] = {
     "cgls-landcover": "raster_tiles",
     "usgs-minerals": "usgs_minerals",
     "ghsl-builtup": "ghsl",
+    "sentinel2-ndvi": "ndvi",
 }
 
 # Sensible order: boundaries first (they provide the clip cutline), then rasters.

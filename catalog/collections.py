@@ -424,6 +424,26 @@ LAYERS: list[Layer] = [
             "render": "rescale=0,10000&colormap_name=inferno",
         },
     ),
+    Layer(
+        id="sentinel2-ndvi",
+        title="Vegetation index NDVI (Sentinel-2)",
+        theme="vegetation",
+        datatype="raster",
+        license="copernicus-free-open",
+        attribution=(
+            "NDVI computed from Copernicus Sentinel-2 data (NIR/Red), processed "
+            "for the Cameroon Geoportal."
+        ),
+        collection=COLLECTION_OPEN,
+        source_url="https://dataspace.copernicus.eu/terms-and-conditions",
+        license_confirmed=True,
+        license_checked="2026-06-24",
+        extra={
+            "max_cloud_cover": 10,
+            "target_res_deg": 0.0005,
+            "render": "rescale=0,0.8&colormap_name=rdylgn",
+        },
+    ),
 ]
 
 LAYERS_BY_ID: dict[str, Layer] = {layer.id: layer for layer in LAYERS}
@@ -457,6 +477,8 @@ LAYER_ALIASES: dict[str, str] = {
     "usgs": "usgs-minerals",
     "ghsl": "ghsl-builtup",
     "builtup": "ghsl-builtup",
+    "ndvi": "sentinel2-ndvi",
+    "vegetation": "sentinel2-ndvi",
 }
 
 

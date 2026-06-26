@@ -64,6 +64,7 @@ license page before ingestion** (Phase 2). The result is recorded here:
 | ISRIC SoilGrids (SOC) | https://www.isric.org/explore/soilgrids | ✅ CC-BY 4.0 (SoilGrids prediction maps); WCS GetCoverage subset | 2026-06-25 | Claude (subagent verify) |
 | Copernicus Global Land Cover (CGLS-LC100) | https://zenodo.org/records/3939050 | ✅ CC-BY 4.0 (Zenodo record) | 2026-06-25 | Claude (subagent verify) |
 | USGS Africa mineral GIS | https://www.sciencebase.gov/catalog/item/607611a9d34e018b3201cbbf | ✅ Public domain (U.S. Geological Survey work, DOI 10.5066/P97EQWXP) | 2026-06-25 | Claude (subagent verify) |
+| Sentinel-2 NDVI (derived) | https://dataspace.copernicus.eu/terms-and-conditions | ✅ Copernicus free & open — NDVI computed from Sentinel-2 NIR(B08)/Red(B04) via earth-search; same licence as the Sentinel-2 source | 2026-06-24 | Claude (live WebFetch) |
 
 ## How attribution flows end-to-end
 
