@@ -44,6 +44,8 @@ export default function App() {
   const [exportLayerId, setExportLayerId] = useState("");
   const [format, setFormat] = useState("geotiff");
   const [job, setJob] = useState(null); // {state, result, error}
+  const [sentinelDate, setSentinelDate] = useState("2025-01-15");
+  const [sentinelInfo, setSentinelInfo] = useState(null);
 
   // --- map init ---
   useEffect(() => {
@@ -184,6 +186,25 @@ export default function App() {
     }
   }
 
+  // --- Sentinel-2 by chosen date ---
+  async function loadSentinelByDate() {
+    if (!sentinelDate) return;
+    setSentinelInfo({ loading: true });
+    const map = mapRef.current;
+    try {
+      const r = await fetch(`${API_BASE}/sentinel?date=${sentinelDate}`);
+      const data = await r.json();
+      if (!r.ok) { setSentinelInfo({ error: data.detail || "not found" }); return; }
+      if (map.getLayer("lyr-s2date")) map.removeLayer("lyr-s2date");
+      if (map.getSource("src-s2date")) map.removeSource("src-s2date");
+      map.addSource("src-s2date", { type: "raster", url: data.tiles.tilejson, tileSize: 256, attribution: data.attribution });
+      map.addLayer({ id: "lyr-s2date", type: "raster", source: "src-s2date" });
+      setSentinelInfo({ datetime: data.datetime, cloud: data.cloud_cover, scene: data.scene_id });
+    } catch (e) {
+      setSentinelInfo({ error: String(e) });
+    }
+  }
+
   const exportLayer = layers.find((l) => l.id === exportLayerId);
   const formatOptions = exportLayer?.datatype === "raster"
     ? ["geotiff"]
@@ -210,10 +231,30 @@ export default function App() {
                   {l.license}{l.tier === "osm-odbl" ? " · ODbL share-alike" : ""}
                 </span>
                 <div style={{ fontSize: 10, color: "#999", marginTop: 4 }}>{l.attribution}</div>
+                {l.datatype === "raster" && (
+                  <a href={`${API_BASE}/layers/${l.id}/cog`} onClick={(e) => e.stopPropagation()}
+                     style={{ fontSize: 10, color: "#2563eb" }}>⬇ Full COG (analysis-ready)</a>
+                )}
               </span>
             </label>
           </div>
         ))}
+
+        <h2 style={{ fontSize: 14, marginTop: 20 }}>Sentinel-2 by date</h2>
+        <div style={{ fontSize: 12, color: "#555" }}>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <input type="date" value={sentinelDate} onChange={(e) => setSentinelDate(e.target.value)}
+                   style={{ fontSize: 12, padding: 5 }} />
+            <button onClick={loadSentinelByDate} style={btn(false)}>Load imagery</button>
+          </div>
+          {sentinelInfo?.loading && <div style={{ marginTop: 6 }}>Searching the Sentinel-2 archive…</div>}
+          {sentinelInfo?.error && <div style={{ marginTop: 6, color: "#dc2626" }}>{sentinelInfo.error}</div>}
+          {sentinelInfo?.datetime && (
+            <div style={{ marginTop: 6, color: "#16a34a" }}>
+              ✓ {sentinelInfo.datetime.slice(0, 10)} · {Math.round(sentinelInfo.cloud)}% cloud
+            </div>
+          )}
+        </div>
 
         <h2 style={{ fontSize: 14, marginTop: 20 }}>Export an area</h2>
         <div style={{ fontSize: 12, color: "#555" }}>

@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app import __version__
 from app.config import settings
-from app.routers import catalog, export
+from app.routers import catalog, export, sentinel
 
 app = FastAPI(
     title="Cameroon Geospatial Data Portal API",
@@ -31,6 +31,7 @@ app.add_middleware(
 
 app.include_router(catalog.router)
 app.include_router(export.router)
+app.include_router(sentinel.router)
 
 
 @app.get("/", tags=["meta"])

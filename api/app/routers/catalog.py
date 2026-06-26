@@ -10,7 +10,10 @@ but the API refuses to leak a non-compliant item regardless).
 """
 from __future__ import annotations
 
+from pathlib import Path
+
 from fastapi import APIRouter, HTTPException, Query
+from fastapi.responses import FileResponse
 
 from app import db
 from app.config import settings
@@ -148,3 +151,41 @@ def item(item_id: str) -> dict:
         raise HTTPException(status_code=409, detail="item missing license/attribution")
     view["stac"] = feature
     return view
+
+
+# ---------------------------------------------------------------------------
+# Analysis-Ready Data (ARD) access
+# ---------------------------------------------------------------------------
+@router.get("/stac")
+def stac(collection: str | None = Query(None), limit: int = Query(100, ge=1, le=500)) -> dict:
+    """Raw STAC FeatureCollection — programmatic, analysis-ready catalog access.
+
+    Items are Cloud-Optimized GeoTIFFs (rasters) / PostGIS tables (vectors), each
+    carrying its license + attribution. Point any STAC client at this endpoint.
+    """
+    body: dict = {"limit": limit}
+    if collection:
+        body["collections"] = [collection]
+    return db.search(body)
+
+
+@router.get("/layers/{item_id}/cog")
+def download_cog(item_id: str) -> FileResponse:
+    """Download a raster layer's full-resolution Cloud-Optimized GeoTIFF (ARD)."""
+    feature = db.get_item(item_id)
+    if not feature:
+        raise HTTPException(status_code=404, detail=f"layer {item_id!r} not found")
+    props = feature.get("properties", {})
+    if props.get("geoportal:datatype") != "raster":
+        raise HTTPException(status_code=400, detail="COG download is for raster layers; "
+                            "use /export for vectors and AOI clips")
+    href = feature.get("assets", {}).get("data", {}).get("href", "")
+    path = Path(href.replace("file://", ""))
+    if not path.is_file():
+        raise HTTPException(status_code=404, detail="COG not found on disk")
+    return FileResponse(
+        path=str(path),
+        media_type="image/tiff; application=geotiff; profile=cloud-optimized",
+        filename=f"{item_id}.tif",
+        headers={"X-Attribution": props.get("attribution", "")},
+    )
