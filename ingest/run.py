@@ -38,6 +38,7 @@ MODULES: dict[str, str] = {
     "soilgrids-soc": "raster_tiles",
     "cgls-landcover": "raster_tiles",
     "usgs-minerals": "usgs_minerals",
+    "ghsl-builtup": "ghsl",
 }
 
 # Sensible order: boundaries first (they provide the clip cutline), then rasters.

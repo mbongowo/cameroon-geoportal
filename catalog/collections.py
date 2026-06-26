@@ -406,6 +406,24 @@ LAYERS: list[Layer] = [
             "layer_match": ["mineral", "deposit", "occurrence", "coal"],
         },
     ),
+    Layer(
+        id="ghsl-builtup",
+        title="Built-up surface 2020 (GHSL)",
+        theme="builtup",
+        datatype="raster",
+        license="CC-BY-4.0",
+        attribution="Built-up surface: European Commission JRC — GHSL GHS-BUILT-S R2023A, CC-BY 4.0.",
+        collection=COLLECTION_OPEN,
+        source_url="https://human-settlement.emergency.copernicus.eu/",
+        license_confirmed=True,
+        license_checked="2026-06-25",
+        # World-Mollweide (EPSG:54009) GeoTIFF in a zip; clip reprojects to 4326.
+        extra={
+            "zip_url": "https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_BUILT_S_GLOBE_R2023A/GHS_BUILT_S_E2020_GLOBE_R2023A_54009_100/V1-0/GHS_BUILT_S_E2020_GLOBE_R2023A_54009_100_V1_0.zip",
+            "nodata": 0,
+            "render": "rescale=0,10000&colormap_name=inferno",
+        },
+    ),
 ]
 
 LAYERS_BY_ID: dict[str, Layer] = {layer.id: layer for layer in LAYERS}
@@ -437,6 +455,8 @@ LAYER_ALIASES: dict[str, str] = {
     "cgls": "cgls-landcover",
     "minerals": "usgs-minerals",
     "usgs": "usgs-minerals",
+    "ghsl": "ghsl-builtup",
+    "builtup": "ghsl-builtup",
 }
 
 

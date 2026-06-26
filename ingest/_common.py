@@ -123,10 +123,15 @@ def cameroon_cutline() -> Path:
 
 
 def clip_raster_to_cameroon(src: Path, dst: Path, *, nodata: float | None = None) -> Path:
-    """Clip ``src`` raster to the Cameroon cutline with gdalwarp."""
+    """Clip ``src`` raster to the Cameroon cutline with gdalwarp.
+
+    Always reprojects to EPSG:4326 (the cutline's CRS). For sources already in
+    4326 this is a no-op; for others (e.g. GHSL in World Mollweide 54009) it
+    reprojects + clips in one pass.
+    """
     cutline = cameroon_cutline()
     cmd = [
-        "gdalwarp", "-overwrite",
+        "gdalwarp", "-overwrite", "-t_srs", "EPSG:4326",
         "-cutline", str(cutline), "-crop_to_cutline",
         "-co", "TILED=YES", "-co", "COMPRESS=DEFLATE",
     ]
